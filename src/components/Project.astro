@@ -1,0 +1,147 @@
+---
+import { Image } from '@astrojs/image/components'
+
+import GithubIcon from './GithubIcon.astro'
+
+// TODO: Implement option for YouTube embed instead of image
+
+export interface Props {
+	title: string
+	description: string
+	href?: string
+	sourceHref?: string
+	sourceModal?: string
+	imageUri: string
+	tags: string[]
+	date: string
+	leftAlign?: boolean
+}
+
+const {
+	title,
+	description,
+	href,
+	sourceHref,
+	sourceModal,
+	imageUri,
+	tags,
+	date,
+	leftAlign = true,
+} = Astro.props
+
+const styles = {
+	link: 'inline-block w-5 h-5 p-1 box-content hover:bg-slate-700 rounded transition duration-100',
+	icon: 'w-full h-full',
+}
+---
+
+<article
+	class={`flex flex-col sm:flex-row items-center sm:items-start gap-x-2.5 text-center ${
+		leftAlign ? 'justify-start sm:text-left' : 'justify-end sm:text-right'
+	}`}
+	data-animate={leftAlign ? 'fade-left' : 'fade-right'}
+>
+	<Image
+		src={imageUri}
+		alt={title}
+		width={800}
+		aspectRatio="4:3"
+		format="png"
+		class="w-full max-w-sm sm:w-64 mb-4 sm:mb-0 bg-slate-800 rounded shadow-2xl shadow-blue-900/20"
+	/>
+
+	<div class={`flex-1 max-w-sm ${leftAlign ? 'sm:-order-1' : ''}`}>
+		<div class="inline-flex flex-wrap justify-center items-center gap-1">
+			<h3 class="inline font-medium text-xl mr-0.5">{title}</h3>
+
+			{
+				href && (
+					<a
+						aria-label="Link"
+						href={href}
+						target="_blank"
+						rel="noopener noreferrer"
+						class={styles.link}
+					>
+						<svg
+							class={styles.icon}
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+							/>
+						</svg>
+					</a>
+				)
+			}
+
+			{
+				sourceHref ? (
+					<a
+						aria-label="Source code"
+						href={sourceHref}
+						target="_blank"
+						rel="noopener noreferrer"
+						class={styles.link}
+					>
+						<GithubIcon class={styles.icon} />
+					</a>
+				) : (
+					sourceModal && (
+						<button
+							class={styles.link}
+							aria-label="Source code"
+							data-open={sourceModal}
+						>
+							<GithubIcon class={styles.icon} />
+						</button>
+					)
+				)
+			}
+		</div>
+
+		<p class="mt-2 text-slate-300">{description}</p>
+
+		<div
+			class={`mt-4 flex flex-wrap gap-[0.375rem] justify-center ${
+				leftAlign ? 'sm:justify-start' : 'sm:justify-end'
+			}`}
+		>
+			{
+				tags.map((tag) => (
+					<span class="font-medium text-sm text-slate-100 bg-slate-800 rounded px-2 py-1 whitespace-nowrap">
+						{tag}
+					</span>
+				))
+			}
+		</div>
+
+		<div
+			class={`mt-3 text-stone-400 text-sm inline-flex flex-wrap items-center gap-1 ${
+				leftAlign ? 'justify-start' : 'justify-end'
+			}`}
+		>
+			<svg
+				class="w-4 h-4"
+				fill="none"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+				xmlns="http://www.w3.org/2000/svg"
+				><path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+				></path>
+			</svg>
+
+			<span>{date}</span>
+		</div>
+	</div>
+</article>

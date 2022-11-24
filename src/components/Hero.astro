@@ -1,0 +1,102 @@
+---
+import WavingHand from './WavingHand.astro'
+import GithubIcon from './GithubIcon.astro'
+
+const styles = {
+	socialIcon:
+		'w-10 h-10 flex justify-center items-center rounded-full text-slate-100 bg-slate-800 hover:bg-slate-700 transition duration-100',
+}
+---
+
+<main
+	class="mt-8 sm:mt-16 text-center sm:text-left flex flex-col items-center sm:items-start"
+>
+	<h1
+		class="max-w-sm sm:max-w-lg text-4xl 2xs:text-5xl xs:text-6xl lg:text-7xl font-black [&>*]:align-middle"
+		data-animate="fade-down"
+	>
+		<span class="mr-2">Hey</span>
+
+		<div
+			class="inline-flex w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24"
+			data-animate="zoom-out"
+		>
+			<WavingHand class="w-full h-full" />
+		</div>
+
+		<span> , I'm&nbsp;</span>
+
+		<span
+			class="bg-clip-text text-transparent bg-gradient-to-br from-purple-400 via-blue-400 to-purple-400 animate-gradient"
+			style="font-weight: inherit;"
+			data-animate="fade-down"
+		>
+			Marcel Miro
+		</span>
+
+		<span class="inline-block -translate-x-1/2">.</span>
+	</h1>
+
+	<p
+		class="mt-12 sm:mt-16 mb-6 sm:mb-8 text-slate-300"
+		data-animate="fade-down"
+		data-animate-delay="150ms"
+	>
+		Hello! My name is Marcel and I'm a full-stack software developer,
+		passionate about building applications leveraging blockchain technology.
+		I recently graduated from the University of York with a Master of
+		Engineering in Computer Science. Currently, I'm pursuing new challenges
+		concerning bridging the gap between "Web2" and "Web3" users and
+		providing utility to end-users through the use of smart contracts.
+	</p>
+
+	<div class="flex flex-wrap items-center gap-2" data-animate-group>
+		<div data-animate="fade-right" data-animate-delay="150ms">
+			<a
+				aria-label="LinkedIn"
+				href="https://www.linkedin.com/in/marcel-miro/"
+				target="_blank"
+				rel="noopener noreferrer"
+				class={`${styles.socialIcon} font-semibold text-xl text-center`}
+			>
+				in
+			</a>
+		</div>
+
+		<div data-animate="fade-right" data-animate-delay="250ms">
+			<a
+				aria-label="GitHub"
+				href="https://github.com/marcelmiro"
+				target="_blank"
+				rel="noopener noreferrer"
+				class={styles.socialIcon}
+			>
+				<GithubIcon class="w-7 h-7 mt-0.5 pr-0.5 box-content" />
+			</a>
+		</div>
+
+		<div data-animate="fade-right" data-animate-delay="350ms">
+			<a
+				aria-label="Email"
+				href="mailto:marcel@marcelmiro.com"
+				target="_blank"
+				rel="noopener noreferrer"
+				class={styles.socialIcon}
+			>
+				<svg
+					class="w-6 h-6"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+					xmlns="http://www.w3.org/2000/svg"
+					><path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+					></path>
+				</svg>
+			</a>
+		</div>
+	</div>
+</main>

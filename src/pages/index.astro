@@ -1,0 +1,67 @@
+---
+import { projects } from '../config'
+import Layout, { Props as LayoutProps } from '../layouts/Layout.astro'
+import Hero from '../components/Hero.astro'
+import Project from '../components/Project.astro'
+import AstranoSource from '../components/AstranoSource.astro'
+
+const layoutProps: LayoutProps = {
+	title: 'Marcel Miro | Full-stack software developer',
+	description:
+		"Hey I'm Marcel and I'm a MEng Computer Science graduate. I love turning ideas into real-life products and have a great interest in web technologies and blockchain.",
+	class: 'px-2 sm:px-4 py-16 max-w-2xl mx-auto',
+}
+---
+
+<Layout {...layoutProps}>
+	<Hero />
+
+	<section class="mt-24 sm:mt-32">
+		<h2
+			class="mb-12 text-3xl font-bold text-center sm:text-left"
+			data-animate="fade-down"
+		>
+			Recent projects
+		</h2>
+
+		<div class="space-y-16">
+			{
+				projects.map((project, i) => (
+					<Project {...project} leftAlign={i % 2 === 1} />
+				))
+			}
+		</div>
+	</section>
+
+	<footer class="mt-32 text-center">
+		<h2 class="mb-6 text-3xl font-bold" data-animate="fade-down">
+			Interested in working together?
+		</h2>
+
+		<div data-animate="fade-down" data-animate-delay="100ms">
+			<a
+				href="mailto:marcel@marcelmiro.com"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="font-medium bg-blue-600 hover:bg-blue-800 rounded-lg px-4 py-3 inline-flex items-center gap-1.5 transition duration-100"
+			>
+				<span class="whitespace-nowrap">Get in touch</span>
+				<svg
+					class="inline w-5 h-5"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+					xmlns="http://www.w3.org/2000/svg"
+					><path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+					></path>
+				</svg>
+			</a>
+		</div>
+	</footer>
+
+	<AstranoSource />
+</Layout>

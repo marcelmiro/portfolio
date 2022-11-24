@@ -1,0 +1,70 @@
+---
+import Modal from './Modal.astro'
+import GithubIcon from './GithubIcon.astro'
+
+const styles = {
+	source: 'group',
+	link: 'block p-1',
+	icon: 'inline w-5 h-5 mb-0.5 mr-0.5',
+	text: 'break-all group-hover:underline',
+}
+---
+
+<Modal id="astrano-source" contentClass="w-[22.5rem] px-6 pt-6 pb-4">
+	<span class="w-full text-left">
+		I created this project before discovering monorepos 😅 Please select the
+		repository you want to view:
+	</span>
+
+	<ul class="mt-4 w-full text-left">
+		<li class={styles.source}>
+			<a
+				href="https://github.com/marcelmiro/astrano-contracts"
+				target="_blank"
+				rel="noopener noreferrer"
+				class={styles.link}
+			>
+				<GithubIcon class={styles.icon} />
+				<span class={styles.text}>astrano/contracts</span>
+			</a>
+		</li>
+
+		<li class={styles.source}>
+			<a
+				href="https://github.com/marcelmiro/astrano-server"
+				target="_blank"
+				rel="noopener noreferrer"
+				class={styles.link}
+			>
+				<GithubIcon class={styles.icon} />
+				<span class={styles.text}>astrano/server</span>
+			</a>
+		</li>
+
+		<li class={styles.source}>
+			<a
+				href="https://github.com/marcelmiro/astrano-client"
+				target="_blank"
+				rel="noopener noreferrer"
+				class={styles.link}
+			>
+				<GithubIcon class={styles.icon} />
+				<span class={styles.text}>astrano/client</span>
+			</a>
+		</li>
+
+		<li class={styles.source}>
+			<a
+				href="https://github.com/marcelmiro/astrano-landing-page"
+				target="_blank"
+				rel="noopener noreferrer"
+				class={styles.link}
+			>
+				<GithubIcon class={styles.icon} />
+				<span class={styles.text}>astrano/landing-page</span>
+			</a>
+		</li>
+	</ul>
+
+	<button class="mt-4 hover:underline" data-close>Close</button>
+</Modal>

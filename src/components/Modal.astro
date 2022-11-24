@@ -1,0 +1,86 @@
+---
+export interface Props {
+	id: string
+	contentClass?: string
+	initialShow?: boolean
+}
+
+const { id, contentClass, initialShow = false } = Astro.props
+const visible = initialShow ? 'flex visible' : 'hidden'
+---
+
+<div
+	id={id}
+	class={`modal w-full h-full fixed inset-0 justify-center items-center z-10 transition ${visible}`}
+>
+	<div
+		class="w-full h-full absolute inset-0 bg-slate-900 opacity-90"
+		data-close
+	>
+	</div>
+
+	<div
+		class={`modal-container max-w-4xl max-h-full text-center bg-slate-700 rounded-lg z-[11] overflow-auto flex flex-col items-center transition ${contentClass}`}
+	>
+		<slot />
+	</div>
+</div>
+
+<style>
+	.modal {
+		opacity: 0;
+	}
+	.modal.visible {
+		opacity: 1;
+	}
+	.modal-container {
+		transform: translateY(25%);
+	}
+	.modal.visible .modal-container {
+		transform: translateY(0);
+	}
+</style>
+
+<script>
+	const TRANSITION_DURATION_IN_MS: number = 250
+	const TRANSITION_DURATION: string = TRANSITION_DURATION_IN_MS + 'ms'
+	const modals = document.querySelectorAll('.modal')
+
+	function open(modal: Element) {
+		;(modal as HTMLElement).style.display = 'flex'
+		setTimeout(() => modal.classList.add('visible'), 10)
+	}
+
+	function close(modal: Element) {
+		modal.classList.remove('visible')
+		setTimeout(
+			() => ((modal as HTMLElement).style.display = 'none'),
+			TRANSITION_DURATION_IN_MS
+		)
+	}
+
+	// Add transition style to modals and click events to close modal buttons
+	for (const modal of modals) {
+		;(modal as HTMLElement).style.transitionDuration = TRANSITION_DURATION
+
+		const container = modal.querySelector('.modal-container')
+		if (container) {
+			;(container as HTMLElement).style.transitionDuration =
+				TRANSITION_DURATION
+		}
+
+		const closeEls = modal.querySelectorAll('[data-close]')
+		for (const el of closeEls) {
+			el.addEventListener('click', () => close(modal))
+		}
+	}
+	// Add click events to open modal button
+	const openModals = document.querySelectorAll('[data-open]')
+
+	for (const el of openModals) {
+		const modalId = el.getAttribute('data-open')
+		const modal = modalId && document.getElementById(modalId)
+		if (!modal) continue
+		el.addEventListener('click', () => open(modal))
+	}
+</script>

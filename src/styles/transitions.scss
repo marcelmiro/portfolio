@@ -1,0 +1,40 @@
+$duration: 500ms;
+$translate: 100px;
+
+body:not(.no-js) {
+	[data-animate] {
+		transition: opacity $duration, transform $duration;
+	}
+
+	[data-animate='fade-down'] {
+		opacity: 0;
+		transform: translateY(-$translate);
+	}
+
+	[data-animate='fade-left'] {
+		opacity: 0;
+		transform: translateX($translate);
+	}
+
+	[data-animate='fade-right'] {
+		opacity: 0;
+		transform: translateX(-$translate);
+	}
+
+	[data-animate='zoom-out'] {
+		opacity: 0;
+		transform: scale(2);
+	}
+
+	@for $i from 1 to 21 {
+		[data-animate-delay='#{$i * 50}ms'] {
+			transition-delay: #{$i * 50}ms;
+		}
+	}
+}
+
+@media (prefers-reduced-motion) {
+	* {
+		transition: none !important;
+	}
+}

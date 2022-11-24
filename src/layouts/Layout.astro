@@ -1,0 +1,154 @@
+---
+import '@fontsource/inter/400.css'
+import '@fontsource/inter/500.css'
+import '@fontsource/inter/700.css'
+import '@fontsource/inter/900.css'
+
+import { defaultMeta } from '../config'
+import '../styles/transitions.scss'
+
+export interface Props {
+	title?: string
+	description?: string
+	canonical?: string
+	image?: string
+	hideIndex?: boolean
+	class?: string
+}
+
+function getCurrentUrl() {
+	const url = Astro.url
+	url.search = ''
+	return url.href
+}
+
+const {
+	title = defaultMeta.title,
+	description,
+	canonical = getCurrentUrl(),
+	image, // = defaultMeta.image,
+	hideIndex = false,
+	class: className = '',
+} = Astro.props
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Default meta -->
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+
+		<!-- Main meta -->
+		<title>{title}</title>
+		{description && <meta name="description" content={description} />}
+		<link rel="canonical" href={canonical} />
+		{hideIndex && <meta name="robots" content="noindex nofollow" />}
+
+		<!-- OG meta -->
+		<meta property="og:type" content="website" />
+		<meta name="og:title" property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:site_name" content="USC Startups" />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={image} />
+		<meta property="og:image:alt" content={title} />
+
+		<!-- Twitter meta -->
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:site" content="@marcelmiro1" />
+		<meta name="twitter:creator" content="@marcelmiro1" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={image} />
+		<meta name="twitter:image:alt" content={title} />
+
+		<!-- Favicon -->
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="/favicons/apple-touch-icon.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="/favicons/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="/favicons/favicon-16x16.png"
+		/>
+		<link rel="manifest" href="/favicons/site.webmanifest" />
+		<link
+			rel="mask-icon"
+			href="/favicons/safari-pinned-tab.svg"
+			color="#2563eb"
+		/>
+		<link rel="shortcut icon" href="/favicons/favicon.ico" />
+		<meta name="msapplication-TileColor" content="#2563eb" />
+		<meta
+			name="msapplication-config"
+			content="/favicons/browserconfig.xml"
+		/>
+		<meta name="theme-color" content="#0C0E10" />
+
+		<script
+			defer
+			src="/stats/js/script.js"
+			data-api="/stats/api/event"
+			data-domain="marcelmiro.com"
+		></script>
+	</head>
+
+	<body class="no-js">
+		<div class={className}>
+			<slot />
+		</div>
+
+		<style>
+			html {
+				font-family: 'Inter', system-ui, sans-serif;
+				@apply bg-bg;
+				@apply text-slate-100;
+			}
+			body {
+				position: relative;
+			}
+			html,
+			body {
+				margin: 0;
+				overflow-x: hidden;
+			}
+		</style>
+	</body>
+
+	<script is:inline>
+		document.body.classList.remove('no-js')
+	</script>
+
+	<script>
+		const observer = new IntersectionObserver(function (entries) {
+			for (const entry of entries) {
+				if (entry.isIntersecting) {
+					if (!entry.target.hasAttribute('data-animate-group')) {
+						entry.target.setAttribute('data-animate', '')
+						continue
+					}
+
+					for (const el of Array.from(entry.target.children)) {
+						el.setAttribute('data-animate', '')
+					}
+				}
+			}
+		})
+
+		const els = document.querySelectorAll(
+			'*:not([data-animate-group]) > [data-animate], [data-animate-group]'
+		)
+		for (const el of els) observer.observe(el)
+	</script>
+</html>
