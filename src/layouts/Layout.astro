@@ -102,9 +102,19 @@ const {
 			data-api="/stats/api/event"
 			data-domain="marcelmiro.com"
 		></script>
+
+		<noscript>
+			<style>
+				[data-animate] {
+					transition: none !important;
+					opacity: 1 !important;
+					transform: none !important;
+				}
+			</style>
+		</noscript>
 	</head>
 
-	<body class="no-js">
+	<body>
 		<div class={className}>
 			<slot />
 		</div>
@@ -125,10 +135,6 @@ const {
 			}
 		</style>
 	</body>
-
-	<script is:inline>
-		document.body.classList.remove('no-js')
-	</script>
 
 	<script>
 		const observer = new IntersectionObserver(function (entries) {
